@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+</head>
+
+<body>
+    <!-- v-on -->
+    <div id="app">
+        <h1>Console →</h1>
+        <button v-on:click="handleClick">Clique</a>
+    </div>
+
+    <!-- Atalho @ -->
+    <div id="app2">
+        <button @click="handleClick">Clique</a>
+    </div>
+
+    <!-- Expressões -->
+    <div id="app3">
+        <button @click="ativo = !ativo">Ativar</button>
+        <p v-if="ativo">Texto de teste.</p>
+    </div>
+
+    <!-- Modificadores 
+        Lista de modificadores - https://vuejs.org/v2/api/#v-on
+    -->
+    <div id="app4">
+        <a href="https://vuejs.org/v2/api/#v-on">Lista de modificadores</a><br><br>
+        <a @click.prevent href="www.google.com">prevent - Previne a ação de redimensionar e só</a> <br>
+        <a @click.prevent="scrollSuave" href="#interno">prevent - Previne a ação de redimensionar e faz aquilo posto em seguida</a> <br>
+        <a @click.once="scrollSuave" href="#interno">once - Só pode fazer aquele evento uma vez</a> <br>
+        <a @click.prevent.once="scrollSuave" href="#interno">Encadeando o prevent com o once</a> <br>
+    </div>
+      
+    <!-- Outros eventos -->
+    <div id="app5">
+        <div @mousemove="handleMouse">Mouse X: {{mouse.x}}</div>
+        <p>Ativa com qualquer tecla</p>
+        <input @keyup="handleKey" type="text" />
+        <p>Ativa com o enter apenas</p>
+        <input @keyup.enter="handleKey" type="text" />
+    </div>
+
+    <h1>Exercícios</h1>
+    <!-- Exercícios -->
+
+    <div id="app6">
+        <ul>
+            <li><a @click.prevent="puxarAcao" href="https://api.iextrading.com/1.0/stock/aapl/quote">Apple</a></li>
+            <li><a @click.prevent="puxarAcao" href="https://api.iextrading.com/1.0/stock/googl/quote">Google</a></li>
+            <li><a @click.prevent="puxarAcao" href="https://api.iextrading.com/1.0/stock/amzn/quote">Amazon</a></li>
+            <li><a @click.prevent="puxarAcao" href="https://api.iextrading.com/1.0/stock/ebay/quote">Ebay</a></li>
+            <li><a @click.prevent="puxarAcao" href="https://api.iextrading.com/1.0/stock/pypl/quote">Paypal</a></li>
+        </ul>
+          
+        <div>
+            <p>Empresa: {{ acao.companyName }}</p>
+            <p>Valor da ação: {{ acao.latestPrice }}</p>
+            <p>Valor de mercado: {{ acao.marketCap }}</p>
+        </div>
+          <!--
+            Utilizando API
+            https://api.iextrading.com/1.0/stock/aapl/quote
+          
+            Adicione um evento de clique a cada <a> do html
+            acima e previna o comportamento padrão.
+          
+            Faça o fetch dos dados do href ao click e mostre na
+            interface o companyName, latestPrice, marketCap
+          -->
+
+
+    </div>
+    
+        
+
+
+    <script>
+
+        // v-on
+        const vm = new Vue({
+            el: "#app",
+            methods: {
+                handleClick(event) {
+                console.log(event);
+                }
+            }
+        });
+
+
+
+        // Atalho @
+        const vm2 = new Vue({
+            el: "#app2",
+            methods: {
+                handleClick(event) {
+                console.log(event);
+                }
+            }
+        });
+
+
+
+        // Expressões
+        const vm3 = new Vue({
+            el: "#app3",
+            data: {
+                ativo: true
+            }
+        });
+
+
+
+        // Modificadores
+        const vm4 = new Vue({
+            el: "#app4",
+            methods: {
+                scrollSuave() {
+                console.log("Scroll Suave");
+                }
+            }
+        });
+
+
+
+        // Outros eventos
+        const vm5 = new Vue({
+            el: "#app5",
+            data: {
+                mouse: ""
+            },
+            methods: {
+                handleKey(event) {
+                    console.log(event.key);
+                },
+                handleMouse(event) {
+                    this.mouse = event;
+                }
+            }
+        });
+
+
+
+        //  Exercícios
+        const vm6 = new Vue({
+            el: "#app6",
+            data: {
+                acao: {}
+            },
+            methods: {
+               puxarAcao(event) {
+                   fetch(event.currentTarget.href)
+                    .then( response => response.json() )
+                    .then( json => this.acao = json )
+               }
+            }
+        });
+
+
+
+        
+    </script>
+
+</body>
+
+</html>

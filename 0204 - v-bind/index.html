@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+</head>
+
+<body>
+
+    <style>
+        .verde {
+            color: green;
+        }
+
+        .vermelho {
+            color: red;
+        }
+    </style>
+
+
+    <!-- Podemos utilizar os atributos -->
+    <div id="app">
+        <a v-bind:href="link">Link Google</a> <!-- a ordem importa -->
+        <p v-bind:class="cor">Parágrafo</p> <!-- adiciona os dois -->
+        <a :href="link" href="https://www.origamid.com">Link Google</a> <!-- a ordem importa -->
+        <p :class="cor" class="p1">Parágrafo</p> <!-- adiciona os dois -->
+    </div>
+
+    <!-- Expressões em diretivas -->
+    <div id="app2">
+        <p :class="comprou ? 'verde' : 'vemelho'">Comprou</p>
+    </div>
+
+
+    <h1>Exercícios</h1>
+    <!-- 
+    Utilizando as API's
+    https://api.iextrading.com/1.0/stock/aapl/quote
+    https://api.iextrading.com/1.0/stock/googl/quote
+
+    - Compare o marketCap (valor de
+    mercado) entre ambas.
+
+    - Mostre o nome das empresas e o valor
+    na interace (companyName e marketCap).
+
+    - Mude a cor para verde o nome da empresa com
+    maior marketCap e vermelho a com menor.
+    -->
+
+    <div id="app3">
+        <button @click="puxarDados">Puxar Dados</button>
+
+        <div>
+            <h3>{{ apple.companyName }}</h3>
+            <p :class="google.marketCap > apple.marketCap ? 'verde' : 'vermelho'">{{ apple.marketCap }}</p>
+        </div>
+
+        <div>
+            <h3>{{ google.companyName }}</h3>
+            <p :class="apple.marketCap > google.marketCap ? 'verde' : 'vermelho'">{{ google.marketCap }}</p>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        // Podemos utilizar os atributos
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                link: "https://www.google.com",
+                cor: "azul"
+            }
+        });
+
+
+
+        // Expressões em diretivas
+        const vm2 = new Vue({
+            el: "#app2",
+            data: {
+                comprou: true
+            }
+        });
+
+
+
+        // Exercícios
+        const vm3 = new Vue ({
+            el: "#app3",
+            data: {
+                google: {},
+                apple: {}
+            },
+            methosd: {
+
+                fetchGoogle() {
+                    fetch("https://api.iextrading.com/1.0/stock/googl/quote")
+                        .then( response => response.json())
+                        .then( google => this.google = google)
+                },
+
+                fetchApple() {
+                    fetch("https://api.iextrading.com/1.0/stock/aapl/quote")
+                        .then( response => response.json())
+                        .then( apple => this.apple = apple)
+                },
+
+                puxarDados() {
+                    this.fetchGoogle()
+                    this.fetchApple()
+                }
+            }
+        })
+
+
+    </script>
+
+</body>
+
+</html>

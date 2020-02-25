@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+  </head>
+
+  <body>
+    <h1>Console →</h1>
+
+    <!-- v-for -->
+    <div id="app">
+      <ul>
+        <li v-for="(curso, index) in cursos">{{index}} - {{curso}}</li>
+      </ul>
+    </div>
+
+
+
+    <!-- v-for objetos -->
+    <div id="app1">
+      <div v-for="estado, key, index in estados">
+        <p>{{ index }}</p>
+        <p>{{ estado.nome }} - {{ key }}</p>
+        <p>{{ estado.populacao }}</p>
+        ----
+      </div>
+
+      <b>Desestruturando com ES6</b>
+
+      <div v-for="{nome, populacao} in estados">
+        <p>{{ nome }}</p>
+        <p>{{ populacao }}</p>
+        ----
+      </div>
+    </div>
+
+
+
+    <!-- v-for parâmetros -->
+    <div id="app2">
+      <div v-for="(value, index) in lista">
+        <p>{{index}}: {{value}}</p>
+      </div>
+      <div v-for="(value, key, index) in melancia">
+        <p>{{index}} {{key}}: {{value}}</p>
+      </div>
+    </div>
+
+
+
+    <!-- :key -->
+    <div id="app3">
+      <div v-for="fruta in frutas" :key="fruta.id + fruta.nome">
+        <p>{{fruta.nome}}</p>
+        <p>{{fruta.cor}}</p>
+      </div>
+    </div>
+
+
+
+    <!-- Número in 10 -->
+    <div id="app4">
+      <span v-for="numero in 5">{{numero}}</span>
+    </div>
+    
+  
+
+    <!-- Reatividade -->
+    <div id="app5">
+      <ul>
+        <li v-for="item in lista">{{item}}</li>
+      </ul>
+      <button @click="removerItem">Remover</button>
+      <button @click="mudarItem">Mudar</button>
+    </div>
+
+    <h1>Exercícios</h1>
+    <!--
+      Utilizando a api:
+      https://viacep.com.br/ws/04538133/json/
+      Mostre o cep, logradouro, complemento, bairro, localidade e uf do que for retornado.
+
+      
+      Use o arquivo json da aula, para listar os cursos e as matérias.
+    -->
+    <div id="app6">
+      <button @click="pegarDados">Pegar dados</button>
+      <ul>
+        <li v-for="local, key in viacep"><b>{{ key }}</b> - {{ local }}</li>
+      </ul>
+    </div>
+
+    <div id="app7"> 
+      <button @click="pegarCursos">PegarCursos</button>
+      <div v-for="curso in cursos">
+        <h1><a :href="curso.link">{{ curso.curso }}</a></h1>
+        <ul>
+          <li v-for="{nome, tempo} in curso.aulas">{{ nome }}, {{ tempo }}</li>
+        </ul>
+      </div>
+    </div>
+
+
+
+    <script>
+
+      // v-for
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          cursos: ["HTML", "CSS", "JavaScript", "PHP", "WordPress"]
+        }
+      });
+
+
+
+      // v-for objetos
+      const vm1 = new Vue({
+        el: "#app1",
+        data: {
+          estados: {
+            sp: {
+              populacao: "45 milhões",
+              nome: "São Paulo"
+            },
+            mg: {
+              populacao: "21 milhões",
+              nome: "Minas Gerais"
+            },
+            rj: {
+              populacao: "17 milhões",
+              nome: "Rio de Janeiro"
+            }
+          }
+        }
+      });
+
+
+
+      // v-for parâmetros
+      const vm2 = new Vue({
+        el: "#app2",
+        data: {
+          lista: ["Item 1", "Item 2", "Item 3"],
+          melancia: {
+            cor: "Verde",
+            peso: "10kg",
+            preco: "R$ 15"
+          }
+        }
+      });
+
+
+
+      // :key
+      const vm3 = new Vue({
+        el: "#app3",
+        data: {
+          frutas: [
+            {
+              id: "banana-1",
+              nome: "Banana",
+              cor: "Amarela"
+            },
+            {
+              id: "melancia-1",
+              nome: "Melancia",
+              cor: "Verde"
+            }
+          ]
+        }
+      });
+
+
+
+      // Número in 10
+      const vm4 = new Vue({
+        el:"#app4"
+      })
+
+
+
+      // reatividade
+      const vm5 = new Vue({
+        el: "#app5",
+        data: {
+          lista: ["Item 1", "Item 2", "Item 3"]
+        },
+        methods: {
+          removerItem() {
+            this.lista.pop(); // Ativa reatividade
+          },
+          mudarItem() {
+            this.$set(this.lista, 0, "Banana") // (O que quero mudar, a posição e pra quero mudar)
+            // this.lista[0] = "Banana"; // Não ativa reatividade
+          }
+        }
+      });
+
+      // Exercícios
+      const vm6 = new Vue ({
+          el: "#app6",
+          data: {
+            viacep: {},
+          },
+          methods: {
+            pegarDados() {
+              fetch('https://viacep.com.br/ws/04538133/json/')
+                .then( response => response.json())
+                .then( json => this.viacep = json )
+            }
+          }
+      }) 
+
+      const vm7 = new Vue ({
+          el: "#app7",
+          data: {
+            cursos: {},
+          },
+          methods: {
+            pegarCursos() {
+              fetch('./cursos.json')
+                .then( response => response.json())
+                .then( json => this.cursos = json)
+            }
+          }
+      })
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <p>{{contador}}</p>
+        <button @click="incrementar">Incrementar</button>
+        <button @click="diminuir">Diminuir</button>
+    </div>
+
+    <div id="app2">
+        <p>{{compra}}</p>
+        <button @click="mudarCompra('Guitarra')">Guitarra</button>
+        <button @click="mudarCompra('Violão')">Violão</button>
+    </div>
+
+    <div id="app3">
+        <p>{{preco}}</p>
+        <button @click="adicionarCupom">Adicionar Cupom</button>
+        <p>{{alerta}}</p>
+    </div>
+      
+    <h1>Exercícios</h1>
+
+    <div id="app4">
+       <button @click="verFatos">Ver fatos sobre gatos</button>
+       <p>Fatos: {{ fatos }} </p>
+    </div>
+  
+
+    <script>
+
+        // Methods
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                contador: 0
+            },
+            methods: {
+                incrementar: function() {
+                    this.contador++;
+                },
+                // sintaxe curta ES6
+                diminuir() {
+                    this.contador--;
+                }
+            }
+        });
+
+
+
+        // Parâmetros e argumentos
+        const vm2 = new Vue({
+            el: "#app2",
+            data: {
+                compra: ""
+            },
+            methods: {
+                mudarCompra(instrumento) {
+                    this.compra = instrumento;
+                }
+            }
+        });
+
+
+
+        // Método dentro de método
+        const vm3 = new Vue({
+            el: "#app3",
+            data: {
+                preco: 149,
+                alerta: ""
+            },
+            methods: {
+                adicionarCupom() {
+                    this.preco *= 0.9;
+                    this.alertaCupom();
+                },
+
+                alertaCupom() {
+                    this.alerta = "Cupom Adicionado";
+                }
+            }
+        });
+
+        // Exercícios
+        const vm4 = new Vue({
+            el: "#app4",
+            data: {
+               fatos: {},
+            },
+            methods: {
+                verFatos() {
+                    fetch("https://cat-fact.herokuapp.com/facts")
+                        .then(response => response.json)
+                        .then( json => {
+                            this.fatos = json
+                        })
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

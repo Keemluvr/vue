@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <h1>Console →</h1>
+
+        <p>{{ instrumento }}</p>
+        <p>{{ nomeProduto }}</p>
+
+    </div>
+
+    <!-- Faça o HTML abaixo funcionar com Vue --> 
+    <div id="app2">
+       <h2>Exercício</h2>
+       <p>{{ msg }}</p> 
+    </div>
+
+    <script>
+
+        // Função construtora
+        console.log(" ----- Função construtora -----")
+        function vueClone(options) {
+            this.options = options
+            this.el = document.querySelector(options.el)
+            this.data = options.data
+        }
+
+        const vmClone = new vueClone({
+            el: "#app",
+            data: {
+                nome: "martelo",
+            }
+        });
+
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                //O $ e o _ serve para não dar conflito
+                // Se tiver $ na frente ele não joga direto para a raiz
+                instrumento: "violão",
+                cor: "vermelho"
+            },
+            computed: {
+                nomeProduto() {
+                    setTimeout( function () {
+                        console.log('This do timeout: ', this)
+                    }, 1000)
+
+                    setTimeout( () => {
+                        console.log('This do vue (elemento pai): ', this, this.instrumento)
+                    }, 1000)
+
+                    console.log("this: ", this.cor)
+                    return this.instrumento + ' ' + this.cor
+                }
+            }
+        })
+        
+        console.log(vmClone)
+        console.log(vm)
+        console.log(vm.$data)
+        // objeto {nome: "Violão"}
+        console.log(vm.$el)
+        // elemento #app
+
+
+        // Crie uma tag com o id app e inicie uma instância de Vue
+        new Vue({
+            el: "#app2",
+            data: {
+                msg: "Funcionando"
+            }
+        }) 
+        
+
+
+    </script>
+
+</body>
+
+</html>

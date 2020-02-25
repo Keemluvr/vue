@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>Console →</h1>
+
+        <p>{{ titulo }}</p>
+        <p>{{ logado }}</p>
+        <p>{{ frutas[0] }}</p>
+        <p>{{ frutas[1] }}</p>
+        <p>{{ objeto.item }}</p>
+        <p>{{ comprou }}</p>
+    </div>
+
+    <h1>Exercícios</h1>
+    <!-- Acerte o código abaixo -->
+    <div id="app2">
+        <!-- errado 
+        {{_empresa}}, {{$produto}}
+        -->
+        <!-- certo -->
+        {{ empresa }}, {{ produto }}
+    </div>
+
+    
+    <br><br>
+    <!-- Crie uma instância que mostre
+    baseado no valor do lado do quadrado
+    o seu perímetro (lX4) e área (lXl).
+    O lado do quadrado deve ser um estado reativo -->
+    <div id="app3">
+        <p>Lado: {{ side }}</p>
+        <p>Perímetro: {{ side * 4 }}</p>
+        <p>Área: {{ side * side }}</p>
+
+    </div>
+  
+
+    <script>
+
+        // Data
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                titulo: "Vue.js Completo",
+                $preco: 59,
+                logado: "",
+                comprou: true,
+                total: 49,
+                vitalicio: null,
+                objeto: {
+                item: "Item 1"
+                },
+                frutas: ["Banana", "Uva"]
+            }
+        });
+
+
+
+        // Proxy
+        console.log(vm.$data.titulo); // Vue.js Completo
+        console.log(vm.titulo); // Vue.js Completo
+        console.log(vm.$data.$preco); // 59
+        console.log(vm.$preco); // undefined
+
+
+
+        // Sempre definir
+        setTimeout(() => {
+            vm.logado = "Sim";
+        }, 2000);
+
+
+        // Exercícios
+        const vm2 = new Vue({
+            el: "#app2",
+            data: {
+                empresa: "Apple",
+                produto: "iPhone",
+            }
+        })
+
+
+        const vm3 = new Vue({
+            el: "#app3",
+            data: {
+                side: 2
+            }
+        })
+        
+
+
+    </script>
+
+</body>
+
+</html>

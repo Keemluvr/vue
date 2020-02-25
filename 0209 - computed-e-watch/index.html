@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+  </head>
+
+  <body>
+      
+    <h1>Console →</h1>
+
+    <!-- computed -->
+    <div id="app">
+      <p>{{total}}</p>
+    </div>
+    
+
+
+    <!-- computed ex -->
+    <div id="app1">
+      <p v-for="carro in carrosAzuis">{{carro.marca}}</p>
+      <button @click="removerCarro">Remover carro</button>
+    </div>
+    ------------------------
+    <br><br>
+
+    
+
+    <!-- watch -->
+    <div id="app2">
+      <p>{{contador}}</p>
+      <button @click="contador++">Adicionar</button>
+    </div>
+    ------------------------
+    <br><br><br>
+
+    
+
+    <!-- watch assincrono -->
+    <div id="app3">
+      <input type="text" v-model="cep" placeholder="Cep" maxlength="8" />
+      <ul>
+        <li v-for="(valor, chave) in endereco">{{chave}}: {{valor}}</li>
+      </ul>
+    </div>
+
+    
+
+    <h1>Exercício</h1>
+
+    <!--
+      Você possui o nome e sobrenome do usuário em data,
+      crie uma propriedade computed que retorne o nome completo
+      
+      Utilize a rest API para puxar as capitais dos paises
+      Use um campo de select, onde o usuário pode selecionar o país.
+      https://restcountries.eu/rest/v2/all
+
+      Com uma função watch, mude a capital de acordo com o país selecionado:
+
+      Ex de campo select:
+
+      <select name="paises" id="paises" v-model="selecionado">
+        <option v-for="pais in paises" :value="pais.name">
+          {{pais.name}}
+        </option>
+      </select>
+    -->
+
+    <div id="app4">
+      <p>Nome completo: {{ nomeCompleto }}</p>
+    </div>
+
+    <div id="app5">
+      <button @click="listarPaises">Puxar países</button><br><br>
+
+      <template v-if="mostrarCampos">
+        <label for="paises">País: </label>
+        <select name="paises" id="paises" v-model="selecionado">
+          <option v-for="pais in paises" :value="pais.name">
+            {{ pais.name }}
+          </option>
+        </select>
+        <p>Capital: {{ capital }} </p>
+      </template>
+     
+    </div>
+
+    <script>
+        // computed
+        const vm = new Vue({
+          el: "#app",
+          data: {
+            preco: 59,
+            desconto: 10
+          },
+          computed: {
+            total() {
+              return "R$ " + (this.preco - this.desconto);
+            }
+          }
+        });
+
+
+
+        // computed ex
+        const vm1 = new Vue({
+          el: "#app1",
+          data: {
+            carros: [
+              {
+                marca: "VW",
+                cor: "Azul"
+              },
+              {
+                marca: "Ford",
+                cor: "Preto"
+              },
+              {
+                marca: "Tesla",
+                cor: "Azul"
+              }
+            ]
+          },
+          computed: {
+            carrosAzuis() {
+              return this.carros.filter(({ cor }) => cor === "Azul");
+            }
+          },
+          methods: {
+            removerCarro() {
+              this.carros.pop()
+            }
+          },
+          watch: {
+            carros(valorNovo, valorAntigo) {
+              console.log('antigo: ', valorAntigo)
+              console.log('novo: ', valorNovo)
+            }
+          }
+        });
+
+
+
+        // watch
+        const vm2 = new Vue({
+          el: "#app2",
+          data: {
+            contador: 0
+          },
+          watch: {
+            contador(valorNovo, valorAntigo) {
+              console.log('antigo: ', valorAntigo)
+              console.log('novo: ', valorNovo)
+              console.log(this.contador);
+            },
+            carros(valorNovo, valorAntigo) {
+              console.log('antigo: ', valorAntigo)
+              console.log('novo: ', valorNovo)
+            }
+          }
+        });
+
+
+
+        // watch assincrono
+        const vm3 = new Vue({
+          el: "#app3",
+          data: {
+            cep: "",
+            endereco: {}
+          },
+          watch: {
+            cep(valor) {
+              if (valor.length === 8) {
+                fetch(`https://viacep.com.br/ws/${valor}/json/`)
+                  .then(r => r.json())
+                  .then(r => {
+                    this.endereco = r;
+                  });
+              }
+            }
+          }
+        });
+
+
+
+        // exercício
+        const vm4 = new Vue({
+          el: "#app4",
+          data: {
+            nome: "Keila",
+            sobrenome: "Daiane Fernandes"
+          },
+          computed: {
+            nomeCompleto() {
+              return this.nome + " " + this.sobrenome;
+            }
+          }
+        });
+
+        const vm5 = new Vue({
+          el: "#app5",
+          data: {
+            mostrarCampos: false,
+            paises: {},
+            capital: '',
+            selecionado: ''
+          },
+          methods: {
+            listarPaises() {
+              fetch('https://restcountries.eu/rest/v2/all')
+                .then( response => response.json() )
+                .then( json => { 
+                  this.paises = json
+                  this.mostrarCampos = true
+                })
+            }
+          },
+          watch: {
+            selecionado(valor) {
+              this.capital = this.paises.find(pais => pais.name === valor).capital
+            }
+          }
+        });
+
+    </script>
+
+  </body>
+</html>

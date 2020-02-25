@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+  </head>
+
+  <body>
+      
+    <h1>Console →</h1>
+
+    <!-- v-html -->
+    <div id="app">
+      <b>v-html - cuidado (injection) quando é uma fonte desconhecida que irá alterar EX: form</b>
+      <div v-html="link"></div>
+      <b>normal</b>
+      <div>{{link}}</div>
+    </div>
+    <br>
+
+    <!-- v-text -->
+    <div id="app1">
+      <div v-text="fruta"></div>
+      <div>{{fruta}}</div>
+    </div>
+    
+
+    <!-- v-once -->
+    <div id="app2">
+      <p v-once>Valor inicial: R$ {{total}}</p>
+      <button @click="gasto += 5">Comprar Banana R$ 5</button>
+      <p>Gasto: R$ {{gasto}}</p>
+      <p>Saldo: R$ {{total - gasto}}</p>
+    </div>
+
+    
+    <h1>Exercício</h1>
+    <!--
+    Renderize o conteúdo, apenas uma vez (não torne o mesmo reativo):
+
+    lista: "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>"
+    -->
+
+    <div id="app3">
+      <div v-html="lista" v-once>
+      </div>
+    </div>
+
+
+    <script>
+        // v-html
+        const vm = new Vue({
+          el: "#app",
+          data: {
+            link: "<a href='https://www.origamid.com'>Origamid</a>"
+          }
+        });
+
+
+
+        // v-text
+        const vm1 = new Vue({
+          el: "#app1",
+          data: {
+            fruta: "Banana"
+          }
+        });
+
+
+
+
+        // v-once
+        const vm2 = new Vue({
+          el: "#app2",
+          data: {
+            total: 150,
+            gasto: 0
+          }
+        });
+
+
+
+        // Exercício
+        const vm3 = new Vue({
+          el: "#app3",
+          data: {
+            lista: `
+              <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+              </ul>
+            `,
+          }
+        });
+
+
+    </script>
+
+  </body>
+</html>
