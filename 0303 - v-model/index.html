@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+
+    <style>
+      .btn {
+        padding: 10px;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- v-model -->
+    <div id="app">
+      <input v-model="nome" /><br />
+      <textarea v-model="mensagem"></textarea>
+      <p>{{ nome }}</p>
+      <p>{{ mensagem }}</p>
+    </div>
+    <br /><br />
+
+    <!-- two way vs one way -->
+    <div id="app1">
+      <input v-model="nome" /><br />
+      <!-- js direto para o DOM e DOM p/ o js(two way)-->
+      <input :value="email" />
+      <!-- js direto para o DOM (one way)-->
+      <p>{{ nome }} <b><- v-model(two way)</b></p>
+      <p>{{ email }} <b><- :value(one way)</b></p>
+    </div>
+    <br /><br />
+
+    <!-- checkbox -->
+    <div id="app2">
+      <input type="checkbox" v-model="receberEmail" id="receberEmail" />
+      <label for="receberEmail">Receber Email</label><br />
+      <input type="checkbox" v-model="termos" id="termos" />
+      <label for="termos">Termos e Condições</label>
+
+      <p>receberEmail: {{receberEmail}}</p>
+      <p>termos: {{termos}}</p>
+    </div>
+    <br /><br />
+
+    <!-- radio -->
+    <div id="app3">
+      <input type="radio" v-model="cor" value="Azul" id="azul" />
+      <label for="azul">Azul</label><br />
+      <input type="radio" v-model="cor" value="Vermelho" id="vermelho" />
+      <label for="vermelho">Vermelho</label>
+
+      <p>cor: {{cor}}</p>
+    </div>
+    <br /><br />
+
+    <!-- select -->
+    <div id="app4">
+      <select v-model="fruta">
+        <option disabled value="">Selecione uma fruta</option>
+        <option value="banana">Banana</option>
+        <option value="morango">Morango</option>
+        <option value="uva">Uva</option>
+      </select>
+
+      <p>fruta: {{fruta}}</p>
+    </div>
+    <br /><br />
+
+    <!-- modifiers -->
+    <div id="app5">
+      <textarea v-model.lazy="mensagem"></textarea> {{ mensagem }} <br />
+      <input v-model.number="total" /> {{ total }}<br />
+      <input v-model.trim="email" /> {{ email }} <br />
+    </div>
+    <br /><br />
+
+    <h1>Exercício</h1>
+
+    <!-- 
+      1 - Crie um criador de botões.
+
+      O usuário poderá definir:
+      width,
+      height,
+      font-size,
+      font-family,
+      text-align,
+      background,
+      color,
+      border-radius,
+
+      As escolhas serão feitas em campos de
+      formulário. Cada escolha deverá ser 
+      refletida em um elemento (o botão).
+
+
+      2 - Crie um formulário com, nome, email, telefone e mensagem.
+      Ao clicar em enviar, as informações preenchidas no formulário
+      devem aparecer abaixo do mesmo. (previna o comportamento padrão do botão enviar)
+    -->
+
+    <!-- Exercício 1  -->
+    <h2>1. Button editor</h2>
+    <div id="app6">
+      <div class="form">
+        <label for="width">width: </label>
+        <input id="width" v-model="btn.width" /><br />
+
+        <label for="height">height: </label>
+        <input id="height" v-model="btn.height" /><br />
+
+        <label for="fontSize">font-size: </label>
+        <input id="fontSize" v-model="btn.fontSize" /><br />
+
+        <label for="fontFamily">font-family: </label>
+        <input id="fontFamily" v-model="btn.fontFamily" /><br />
+
+        <label>text-align: </label>
+        <select v-model="btn.textAlign">
+          <option value="" disabled>Selecione uma opção</option>
+          <option value="center">center</option>
+          <option value="left">left</option>
+          <option value="right">right</option>
+          <option value="justify">justify</option>
+          <option value="initial">initial</option>
+          <option value="inherit">inherit</option> </select
+        ><br />
+
+        <label for="background">background: </label>
+        <input id="background" type="color" v-model="btn.background" /><br />
+
+        <label for="color">color: </label>
+        <input id="color" type="color" id="color" v-model="btn.color" /><br />
+
+        <label for="borderRadius">border-radius: </label>
+        <input id="borderRadius" v-model="btn.borderRadius" /><br />
+
+        <label for="borderColor">border-color: </label>
+        <input id="borderColor" type="color" v-model="btn.borderColor" /><br />
+      </div>
+
+      <div class="box">
+        <button :style="btn" class="btn">I'm button</button>
+      </div>
+    </div>
+    
+    <!-- Exercício 2  -->
+    <h2>2. Form</h2>
+    <div id="app7">
+      <label for="name">Name:</label><br>
+      <input id="name" type="text" v-model="form.name"><br>
+
+      <label for="email">Email:</label><br>
+      <input id="email" type="email" v-model="form.email"><br>
+
+      <label for="telephone">Telephone:</label><br>
+      <input id="telephone" type="tel" v-model="form.telephone"><br>
+
+      <label for="message">Message:</label><br>
+      <textarea id="message" cols="22" rows="5" v-model="form.message"></textarea><br>
+
+      <input type="submit" value="Enviar" @click.preventDefault()="enviarForm">
+
+      <p><b>Informações:</b></p>
+      <p>Name: {{ form.name }}</p>
+      <p>Email: {{ form.email }}</p>
+      <p>Telephone: {{ form.telephone }}</p>
+      <p>Message: {{ form.message }}</p>
+    </div>
+
+    <script>
+      // v-model
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          nome: "",
+          mensagem: ""
+        }
+      });
+
+      // two-way vs one-way
+      const vm1 = new Vue({
+        el: "#app1",
+        data: {
+          nome: "keila",
+          email: "keila.df@gmail.com"
+        }
+      });
+
+      // checkbox
+      const vm2 = new Vue({
+        el: "#app2",
+        data: {
+          receberEmail: true,
+          termos: false
+        }
+      });
+
+      // radio
+      const vm3 = new Vue({
+        el: "#app3",
+        data: {
+          cor: ""
+        }
+      });
+
+      // select
+      const vm4 = new Vue({
+        el: "#app4",
+        data: {
+          fruta: ""
+        }
+      });
+
+      // modifiers
+      const vm5 = new Vue({
+        el: "#app5",
+        data: {
+          mensagem: "",
+          total: 0,
+          email: ""
+        }
+      });
+
+      // Exercícios
+      const vm6 = new Vue({
+        el: "#app6",
+        data: {
+          btn: {
+            width: "200px",
+            height: "50px",
+            fontSize: "19px",
+            fontFamily: "monospace",
+            textAlign: "center",
+            background: "tomato",
+            color: "#ffffff",
+            borderRadius: "4px",
+            borderColor: "tomato"
+          }
+        }
+      });
+
+      const vm7 = new Vue({
+        el: "#app7",
+        data: {
+          form: {
+            name: "",
+            email: "",
+            telephone: "",
+            message: ""
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

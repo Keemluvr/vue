@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+
+    <style>
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- created -->
+    <div id="app">
+      <div>{{ dados }}</div>
+    </div>
+    <br><br>
+
+
+
+    <!-- mounted -->
+    <div id="app1">
+      {{mensagem}}
+    </div>
+    <br><br>
+
+    
+
+    <!-- updated -->
+    <div id="app2">
+      <button @click="contador++">{{contador}}</button>
+    </div>
+    <br><br>
+    
+
+    <!-- destroyed -->
+    <div id="app3">
+      <button @click="contador++">{{contador}}</button>
+      <button @click="destruir">Destruir</button>
+    </div>
+
+    
+
+    <!-- hooks -->
+    <div id="app4">
+    </div>
+
+    <h1>Exercícios</h1>
+    <!-- Utilize a api do github para
+    mostrar todos os seus dados na tela.
+    Faça o fetch das informações utilizando
+    um dos hooks do vue:
+
+    https://api.github.com/users/origamid (utilize o seu usuário)
+    -->
+    <div id="app5">
+      <h2>1. github API</h2>
+      <p v-for="data, key in github">
+        <b>{{ key }}:</b> {{ data }}
+      </p>
+    </div>
+
+    <!-- 
+      Crie um contador, onde seja possível clicar em
+      um botão e adicionar +1 ao número.
+
+      Toda vez que o contador mudar, mude o título da página
+      para o total do contador. Utilize um hook para isso
+    -->
+    <div id="app6">
+      <h2>2. Título</h2>
+      <p>Atualiza o título com o contador</p>
+      <button id="contador" @click="contador++">{{ contador }}</button>
+    </div>
+
+
+    <script>
+      
+      // created
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          mensagem: "Uma mensagem.",
+          dados: {}
+        },
+        methods: {
+          puxarApi() {
+            fetch("https://api.github.com/users/keemluvr")
+              .then(r => r.json())
+              .then(r => {
+                this.dados = r;
+              });
+          }
+        },
+        beforeCreate() {
+          console.log('---------')
+          console.log('Antes da criação (ainda não foi criado o data)')
+          console.log(this.mensagem);
+          // undefined
+        },
+        created() {
+          console.log('---------')
+          console.log('Após criado')
+          console.log(this.mensagem);
+          // "Uma mensagem."
+          this.puxarApi();
+        }
+      });
+
+
+
+      // mounted
+      const vm1 = new Vue({
+        el: "#app1",
+        data: {
+          mensagem: "Uma mensagem."
+        },
+        beforeMount() {
+          console.log('---------')
+          console.log('beforeMounted')
+          console.log(this.$el);
+          // Template ainda não renderizado [DOM ainda não foi criado]
+        },
+        mounted() {
+          console.log('---------')
+          console.log('mounted')
+          console.log(this.$el);
+          // Template renderizado
+        }
+      });
+
+
+
+      // updated
+      const vm2 = new Vue({
+        el: "#app2",
+        data: {
+          contador: 0
+        },
+        beforeUpdate() {
+          console.log(this.contador);
+        },
+        updated() {
+          console.log(this.contador);
+        }
+      });
+
+
+
+      // destroyed
+      const vm3 = new Vue({
+        el: "#app3",
+        data: {
+          contador: 0
+        },
+        methods: {
+          destruir() {
+            this.$destroy();
+          }
+        },
+        beforeDestroy() {
+          console.log("Vai destruir");
+        },
+        destroyed() {
+          console.log("Destruiu");
+        }
+      });
+
+
+
+      // hooks
+      const vm4 = new Vue({
+        el: "#app4",
+        beforeCreate() {},
+        created() {},
+        beforeMount() {},
+        mounted() {},
+        beforeUpdate() {},
+        updated() {},
+        beforeDestroy() {},
+        destroyed() {}
+      });
+
+    
+
+      // Exercícios
+      const vm5 = new Vue({
+        el: "#app5",
+        data: {
+          github: {}
+        },
+        methods: {
+          puxarGithub() {
+            fetch('https://api.github.com/users/keemluvr')
+              .then( response => response.json() )
+              .then( json => this.github = json )
+          }
+        },
+        created() {
+          this.puxarGithub()
+        },
+      });
+
+      const vm6 = new Vue({
+        el: "#app6",
+        data: {
+          contador: 0,
+        },
+        updated() {
+         document.title = this.contador
+        },
+      });
+      
+      
+    </script>
+  </body>
+</html>

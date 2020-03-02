@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <title>Vue.js</title>
+
+    <style>
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- v-on:key-->
+    <div id="app">
+      <p>keyup</p>
+      <input @keyup="ativar" />
+      <p>enter</p>
+      <input @keyup.enter="ativar" />
+      <p>esc</p>
+      <input @keyup.esc="ativar" />
+      <p>up</p>
+      <input @keyup.up="ativar" />
+    </div>
+
+    <!-- v-on:click -->
+    <div id="app1">
+      <p @click="ativar">Clique</p>
+      <p @click.alt="ativar">Clique ALT</p>
+      <p @click.right="ativar">Clique ESQUERDO</p>
+      <p @click.middle="ativar">Clique MEIO</p>
+    </div>
+    
+
+    <!-- eventos globais -->
+    <div id="app2">
+      <p style="position: fixed;">Scroll: {{totalScroll}}</p>
+    </div>
+
+    <script>
+      // v-on:key
+      const vm = new Vue({
+        el: "#app",
+        data: {},
+        methods: {
+          ativar(event) {
+            event.currentTarget.style.border = "4px solid blue";
+          }
+        }
+      });
+
+
+
+      // v-on:click 
+      const vm1 = new Vue({
+        el: "#app1",
+        data: {},
+        methods: {
+          ativar(event) {
+            event.currentTarget.style.color = "blue";
+          }
+        }
+      });
+
+
+
+      // eventos globais
+      const vm2 = new Vue({
+        el: "#app2",
+        data: {
+          totalScroll: 0
+        },
+        methods: {
+          handleScroll() {
+            this.totalScroll = window.scrollY;
+          }
+        },
+        created() {
+          window.addEventListener("scroll", this.handleScroll);
+        }
+      });
+
+
+    </script>
+  </body>
+</html>
