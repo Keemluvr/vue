@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <script src="index.js" type="module"></script>
+    <title>Vue.js</title>
+  </head>
+
+  <body>
+
+    <!-- vue.component() -->
+    <div id="app">
+      <botao-contador></botao-contador>
+      <botao-contador></botao-contador>
+      <botao-contador></botao-contador>
+    </div>
+    <br>-------------------------------<br>
+
+
+
+    <!-- global vs local -->
+    <div id="app1">
+        <componente-local></componente-local>
+        <componente-global></componente-global>
+    </div>
+    <br>-------------------------------<br>
+
+
+
+    <!-- palcalcase vc kebab-case -->
+    <div id="app2">
+      <componente-local2></componente-local2>
+      <componente-global2></componente-global2>
+    </div>
+    <br>-------------------------------<br>
+
+
+
+    <!-- module import/export -->
+    <div id="app3">
+      <menu-principal></menu-principal>
+      <botao-contador2></botao-contador2>
+    </div>
+    <br>-------------------------------<br>
+
+
+
+    <!-- componente dentro de componente -->
+    <div id="app4">
+      <menu-principal2></menu-principal2>
+    </div>
+    <br>-------------------------------<br>
+
+
+    <!-- 
+      Crie uma tela com 3 diferentes Componentes.
+
+      1 - Mostre o tempo do dia usando a API:
+      https://www.metaweather.com/api/location/455825/ (Código do Rio de Janeiro)
+
+      2 - Mostre a relação dolar/real
+      https://api.exchangeratesapi.io/latest?base=USD
+
+      3 - Mostre o valor de mercado da Apple (marketCap)
+      https://api.iextrading.com/1.0/stock/aapl/quote
+
+      Crie os componentes em arquivos separados e utilize import/export
+      O componente 1 deve ser registrado globalmente
+      O componente 2 deve ser registrado localmente dentro do componente 3.
+      O componente 3 deve ser registrado localmente da instância Vue.js
+    -->
+    <a href="http://127.0.0.1:5501/0501%20-%20componentes-basico/exercicio/"> <button>Ver exercício</button></a>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <script src="index.js" type="module"></script>
+    <title>Vue.js</title>
+  </head>
+
+  <body>
+
+    <!-- events -->
+    <div id="app">
+      <p>{{mensagem}}</p>
+      <custom-button @meu-evento="receberEvento"></custom-button>
+    </div>
+    <br><br><br>
+
+
+    
+    <!-- eventos para atualizar props -->
+    <div id="app1">
+      <p>{{contador}}</p>
+      <botao-incrementar
+        @update:contador="contador = $event"
+        :contador="contador"
+      ></botao-incrementar>
+    
+      <!-- Faz a mesma coisa que o código acima -->
+      <botao-incrementar :contador.sync="contador"></botao-incrementar>
+    </div>
+    <br><br><br>
+
+    
+
+    <!-- eventbus -->
+    <div id="app2">
+      <componente-um></componente-um>
+      <componente-dois></componente-dois>
+    </div>
+    
+
+
+    <!-- exercício -->
+    <h1>Exercício</h1>
+ 
+  </body>
+</html>

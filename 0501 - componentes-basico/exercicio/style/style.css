@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.card {
+    border-radius: 5px;
+    border: 2px solid tomato;
+    width: 80%;
+    padding: 10px 20px;
+    margin: 5vh auto;
+}
+
+.item {
+    margin: 20px 0;
+}

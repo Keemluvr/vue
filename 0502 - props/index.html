@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="../vue.js"></script>
+    <script src="index.js" type="module"></script>
+    <title>Vue.js</title>
+  </head>
+
+  <body>
+
+    <!-- props -->
+    <div id="app">
+      <lista-produtos :produtos="listaItens"></lista-produtos>
+    </div>
+
+
+    <!-- componente para componente -->
+    <div id="app2">
+      <lista-cursos></lista-cursos>
+    </div>
+    
+
+
+    <!-- mais de uma prop -->
+    <div id="app3">
+      <blog-post
+        :titulo="blog.titulo"
+        :texto="blog.texto"
+        :likes="blog.likes"
+      ></blog-post>
+    </div>
+    
+
+
+    <!-- estática vs dinâmica -->
+    <!-- validação -->
+    <div id="app4">
+      <blog-post-2
+        titulo="Esse título é estático"
+        :texto="blog.texto"
+        :likes="blog.likes"
+        :tags="['Frutas', 'Legumes', 'Cozinha']"
+      ></blog-post-2>
+    </div>
+    
+    
+    <!-- one way data flow -->
+    <div id="app5">
+      <blog-post-4 :contador="contador"></blog-post-4>
+    </div>
+    <br>
+    <br>
+    <br>
+    
+
+
+    <!-- exercício -->
+    <h1>Exercício</h1>
+    <!-- 
+      Crie um componente com um campo de input e um botão para enviar o valor.
+      Nesse campo de input será possível escrever o simbolo de empresas americanas
+
+      simbolos ex:
+      aapl -> Apple
+      goog -> Google
+      msft -> Microsoft
+      amzn -> Amazon
+      fb -> Facebook
+
+      Ao clicar no botão, faça um fetch com a API:
+      https://api.iextrading.com/1.0/stock/${SIMBOLO}/quote
+
+      O resultado do fetch deverá ser mostrado em um componente filho do formulário.
+      Envia as informações utilizando prop
+    
+      Mostre todas as informações do fetch utilizando um loop.
+    -->
+  <div id="app6">
+    <ul>
+      <!-- <li :v-for="(name, index) in " :key="index"></li> -->
+    </ul>
+    <formulario-acoes></formulario-acoes>
+  </div>
+
+
+  </body>
+</html>
