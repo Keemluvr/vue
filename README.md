@@ -1,4 +1,8 @@
-## Vue
+# 📚 Vue
+
+## :wolf: Origamid  
+[Origamid](https://www.origamid.com)  
+Curso: [Vue](https://www.origamid.com/curso/vue-js-completo/)
 
 ## Project 1
 :computer: [Tecno](https://github.com/Keemluvr/techno)
